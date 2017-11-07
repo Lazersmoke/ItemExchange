@@ -48,10 +48,6 @@ public class DamageRule extends ExchangeRule {
 				getPercent(itemType, this.damageValueMax));
 	}
 	
-	private static short getInversedDurability(ItemStack item) {
-		return (short) (item.getType().getMaxDurability() - item.getDurability());
-	}
-	
 	public static boolean itemAllowed(ItemStack item) {
 		return item.getType().getMaxDurability() > 0;
 	}
@@ -82,12 +78,16 @@ public class DamageRule extends ExchangeRule {
 
 	@Override
 	public boolean conforms(ItemStack item) {
-		if(this.damageValueMin == -1) {
-			return getInversedDurability(item) < this.damageValueMax;
-		} else if(this.damageValueMax == -1) {
-			return getInversedDurability(item) > this.damageValueMin;
+		if (this.damageValueMin == -1) {
+			return item.getDurability() < this.damageValueMax;
 		}
-		return getInversedDurability(item) > this.damageValueMin && getInversedDurability(item) < this.damageValueMax;
+		if (this.damageValueMax == -1) {
+			return item.getDurability() > this.damageValueMin;
+		}
+		if (this.damageValueMax == this.damageValueMin) {
+			return item.getDurability() == this.damageValueMin;
+		}
+		return (item.getDurability() > this.damageValueMin) && (item.getDurability() < this.damageValueMax);
 	}
 
 	@Override

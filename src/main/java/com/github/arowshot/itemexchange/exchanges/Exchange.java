@@ -150,6 +150,7 @@ public class Exchange {
 		
 		for(final ItemStack is : acceptableItems) {
 			ItemStack vanityItem = is.clone();
+			//Loop through rules and apply transforms to make the item look pretty
 			ISUtils.addLore(vanityItem, ChatColor.AQUA + "Click to pay with this stack.");
 			Clickable purchaseButton = new Clickable(vanityItem) {
 				public void clicked(Player player) {
@@ -166,9 +167,16 @@ public class Exchange {
 							player.sendMessage(ChatColor.RED + "Failed to remove items from inventory");
 							throw new TransactionFailedException("Failed to remove items from inventory");
 						}
+						
+						//Remove items from shop
+			            if (!shopInventory.addItem(remove).isEmpty()) {
+			            	player.sendMessage(ChatColor.RED + "Failed to add items to shop");
+			            	throw new TransactionFailedException("Failed to add items to shop");
+			            }
+						
 						//Remove items from shop inventory and add them to player inventory
 						for(ExchangeIO output : getOutputs()) {		
-							List<ItemStack> acceptableOutputs = findAcceptableItems(player.getInventory(), output);
+							List<ItemStack> acceptableOutputs = findAcceptableItems(shopInventory, output);
 							//Remove types of items where there are not enough to output
 							for(int i = 0; i < acceptableOutputs.size(); i++) {
 								if(acceptableOutputs.get(i).getAmount() < output.getCount()) {

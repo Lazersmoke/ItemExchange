@@ -65,7 +65,7 @@ public class Shop {
 	}
 	
 	public void updateShop(ItemStack item) {
-		ISUtils.setLore(item, (String[]) getLore().toArray());
+		ISUtils.setLore(item, (String[]) getLore().toArray(new String[0]));
 	}
 	
 	public ItemStack toItem() {
@@ -129,19 +129,12 @@ public class Shop {
 			
 			
 			ISUtils.addLore(vanityItem, ChatColor.DARK_AQUA + "Outputs:");
-			ISUtils.addLore(vanityItem, new StringBuilder()
-				.append(ChatColor.AQUA)
-				.append(ex.getInput().getCount())
-				.append(" ")
-				.append(ex.getInput().getData().getItemType().toString())
-				.toString());
-			for(ExchangeRule er : ex.getInput().getRules()) {
-				ISUtils.addLore(vanityItem, new StringBuilder()
-					.append(ChatColor.GREEN)
-					.append(er.getDisplayText())
-					.toString());
+			for (ExchangeIO output : ex.getOutputs()) {
+				ISUtils.addLore(vanityItem, ChatColor.AQUA + " " + output.getCount() + " " + output.getData().getItemType().toString());
+				for (ExchangeRule er : output.getRules()) {
+					ISUtils.addLore(vanityItem, ChatColor.GREEN + er.getDisplayText());
+				}
 			}
-			
 			
 			
 			Clickable exchangeButton = new Clickable(vanityItem) {

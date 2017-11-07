@@ -18,6 +18,8 @@ public class ItemExchangeUtil {
 		ExchangeIO input = null;
 		List<ExchangeIO> outputs = new ArrayList<ExchangeIO>();
 		for(ItemStack item : inv) {
+			if(item == null)
+				continue;
 			if(Shop.isValidShop(item)) {
 				return Shop.fromItem(item);
 			}
@@ -28,7 +30,8 @@ public class ItemExchangeUtil {
 				ExchangeIO io = ExchangeIO.fromItem(item);
 				if(io.getType() == ExchangeType.INPUT) {
 					if(input != null) {
-						exchanges.add(new Exchange(input, outputs));
+						if(!outputs.isEmpty())
+							exchanges.add(new Exchange(input, outputs));
 						outputs = new ArrayList<ExchangeIO>();
 					}
 					input = io;
@@ -38,6 +41,8 @@ public class ItemExchangeUtil {
 				}
 			}
 		}
+		if(outputs != null && !outputs.isEmpty())
+			exchanges.add(new Exchange(input, outputs));
 		if(!exchanges.isEmpty()) {
 			return new Shop("Shop", exchanges);
 		}
@@ -49,7 +54,8 @@ public class ItemExchangeUtil {
 		ItemStack[] inv = inventory.getContents();
 		ItemStack[] clone = new ItemStack[inv.length];
 		for(int i = 0; i < inv.length; i++) {
-			clone[i] = inv[i].clone();
+			if(inv[i] != null)
+				clone[i] = inv[i].clone();
 		}
 		return clone;
 	}

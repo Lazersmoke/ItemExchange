@@ -71,7 +71,7 @@ public class ExchangeIO {
 				conforms = false;
 			}
 		}
-		if(!is.getData().equals(getData().getItemType())) {
+		if(!is.getData().equals(getData())) {
 			return false;
 		}
 		return conforms;
