@@ -1,4 +1,4 @@
-package com.devotedmc.itemexchange.exchanges;
+package com.github.arowshot.itemexchange.exchanges;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
-import com.devotedmc.itemexchange.exchangerules.ExchangeRule;
-import com.devotedmc.itemexchange.util.GsonUtil;
+import com.github.arowshot.itemexchange.exchangerules.ExchangeRule;
+import com.github.arowshot.itemexchange.util.GsonUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import vg.civcraft.mc.civmodcore.itemHandling.ISUtils;

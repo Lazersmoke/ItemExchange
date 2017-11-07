@@ -1,8 +1,8 @@
-package com.devotedmc.itemexchange.gui;
+package com.github.arowshot.itemexchange.gui;
 
 import org.bukkit.entity.Player;
 
-import com.devotedmc.itemexchange.exchanges.Shop;
+import com.github.arowshot.itemexchange.exchanges.Shop;
 
 import vg.civcraft.mc.civmodcore.inventorygui.ClickableInventory;
 

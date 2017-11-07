@@ -1,6 +1,6 @@
-package com.devotedmc.itemexchange.command;
+package com.github.arowshot.itemexchange.command;
 
-import com.devotedmc.itemexchange.command.commands.CreateExchangeCommand;
+import com.github.arowshot.itemexchange.command.commands.CreateExchangeCommand;
 
 import vg.civcraft.mc.civmodcore.command.CommandHandler;
 

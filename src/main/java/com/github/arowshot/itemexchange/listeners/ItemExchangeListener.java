@@ -1,4 +1,4 @@
-package com.devotedmc.itemexchange.listeners;
+package com.github.arowshot.itemexchange.listeners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.devotedmc.itemexchange.ItemExchangePlugin;
-import com.devotedmc.itemexchange.exchanges.Exchange;
-import com.devotedmc.itemexchange.exchanges.ExchangeIO;
-import com.devotedmc.itemexchange.exchanges.ExchangeIO.ExchangeType;
-import com.devotedmc.itemexchange.exchanges.Shop;
+import com.github.arowshot.itemexchange.ItemExchangePlugin;
+import com.github.arowshot.itemexchange.exchanges.Exchange;
+import com.github.arowshot.itemexchange.exchanges.ExchangeIO;
+import com.github.arowshot.itemexchange.exchanges.ExchangeIO.ExchangeType;
+import com.github.arowshot.itemexchange.exchanges.Shop;
 
 public class ItemExchangeListener implements Listener{
 	

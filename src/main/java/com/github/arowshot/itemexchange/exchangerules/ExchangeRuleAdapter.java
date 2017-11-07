@@ -1,4 +1,4 @@
-package com.devotedmc.itemexchange.exchangerules;
+package com.github.arowshot.itemexchange.exchangerules;
 
 import java.lang.reflect.Type;
 

@@ -1,4 +1,4 @@
-package com.devotedmc.itemexchange;
+package com.github.arowshot.itemexchange;
 
 import java.util.logging.Logger;
 
@@ -7,9 +7,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
-import com.devotedmc.itemexchange.command.ItemExchangeCommandHandler;
-import com.devotedmc.itemexchange.exchangerules.rules.DamageRule;
-import com.devotedmc.itemexchange.listeners.ItemExchangeListener;
+import com.github.arowshot.itemexchange.command.ItemExchangeCommandHandler;
+import com.github.arowshot.itemexchange.exchangerules.rules.DamageRule;
+import com.github.arowshot.itemexchange.listeners.ItemExchangeListener;
 
 import vg.civcraft.mc.civmodcore.ACivMod;
 import vg.civcraft.mc.civmodcore.command.CommandHandler;

@@ -1,4 +1,4 @@
-package com.devotedmc.itemexchange.exchanges;
+package com.github.arowshot.itemexchange.exchanges;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.devotedmc.itemexchange.util.GsonUtil;
-import com.devotedmc.itemexchange.util.ItemExchangeUtil;
-import com.devotedmc.itemexchange.util.TransactionFailedException;
+import com.github.arowshot.itemexchange.util.GsonUtil;
+import com.github.arowshot.itemexchange.util.ItemExchangeUtil;
+import com.github.arowshot.itemexchange.util.TransactionFailedException;
 
 import net.md_5.bungee.api.ChatColor;
 import vg.civcraft.mc.civmodcore.inventorygui.Clickable;

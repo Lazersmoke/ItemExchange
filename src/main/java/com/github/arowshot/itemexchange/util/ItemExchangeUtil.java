@@ -1,4 +1,4 @@
-package com.devotedmc.itemexchange.util;
+package com.github.arowshot.itemexchange.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +7,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
-import com.devotedmc.itemexchange.exchanges.Exchange;
-import com.devotedmc.itemexchange.exchanges.ExchangeIO;
-import com.devotedmc.itemexchange.exchanges.Shop;
-import com.devotedmc.itemexchange.exchanges.ExchangeIO.ExchangeType;
+import com.github.arowshot.itemexchange.exchanges.Exchange;
+import com.github.arowshot.itemexchange.exchanges.ExchangeIO;
+import com.github.arowshot.itemexchange.exchanges.ExchangeIO.ExchangeType;
+import com.github.arowshot.itemexchange.exchanges.Shop;
 
 public class ItemExchangeUtil {
 	public static Shop getShop(Inventory inv) {

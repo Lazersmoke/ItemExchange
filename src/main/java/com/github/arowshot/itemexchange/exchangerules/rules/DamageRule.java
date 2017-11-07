@@ -1,10 +1,10 @@
-package com.devotedmc.itemexchange.exchangerules.rules;
+package com.github.arowshot.itemexchange.exchangerules.rules;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import com.devotedmc.itemexchange.exchangerules.ExchangeRule;
-import com.devotedmc.itemexchange.exchanges.Exchange;
+import com.github.arowshot.itemexchange.exchangerules.ExchangeRule;
+import com.github.arowshot.itemexchange.exchanges.Exchange;
 
 import vg.civcraft.mc.civmodcore.inventorygui.Clickable;
 

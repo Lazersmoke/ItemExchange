@@ -1,7 +1,7 @@
-package com.devotedmc.itemexchange.util;
+package com.github.arowshot.itemexchange.util;
 
-import com.devotedmc.itemexchange.exchangerules.ExchangeRule;
-import com.devotedmc.itemexchange.exchangerules.ExchangeRuleAdapter;
+import com.github.arowshot.itemexchange.exchangerules.ExchangeRule;
+import com.github.arowshot.itemexchange.exchangerules.ExchangeRuleAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

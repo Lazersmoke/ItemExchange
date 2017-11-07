@@ -1,4 +1,4 @@
-package com.devotedmc.itemexchange.command.commands;
+package com.github.arowshot.itemexchange.command.commands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.devotedmc.itemexchange.exchangerules.ExchangeRule;
-import com.devotedmc.itemexchange.exchangerules.rules.DamageRule;
-import com.devotedmc.itemexchange.exchanges.ExchangeIO;
-import com.devotedmc.itemexchange.exchanges.ExchangeIO.ExchangeType;
+import com.github.arowshot.itemexchange.exchangerules.ExchangeRule;
+import com.github.arowshot.itemexchange.exchangerules.rules.DamageRule;
+import com.github.arowshot.itemexchange.exchanges.ExchangeIO;
+import com.github.arowshot.itemexchange.exchanges.ExchangeIO.ExchangeType;
 
 import vg.civcraft.mc.civmodcore.command.PlayerCommand;
 
