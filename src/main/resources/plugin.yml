@@ -1,5 +1,5 @@
 name: ItemExchange
-main: com.devotedmc.itemexchange.ItemExchangePlugin
+main: com.github.arowshot.itemexchange.ItemExchangePlugin
 version: ${releaseVersion}
 author: ArowShot
 depend: [CivModCore]
