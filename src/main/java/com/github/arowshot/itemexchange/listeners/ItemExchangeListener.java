@@ -39,7 +39,6 @@ public class ItemExchangeListener implements Listener{
 					ItemStack[] newMatrix = new ItemStack[inv.getMatrix().length];
 					for (int i = 0; i < inv.getMatrix().length; i++) {
 						ItemStack is = inv.getMatrix()[i];
-						System.out.println(is.getAmount());
 						if (is.getAmount() != 0) {
 							newMatrix[i] = is;
 						}
@@ -53,18 +52,18 @@ public class ItemExchangeListener implements Listener{
 					List<Shop> shops = new ArrayList<Shop>();
 					for(ItemStack item : inv.getMatrix()) {
 						if(item != null && item.getType() != Material.AIR) {
-							if(ExchangeIO.isValidExchange(item)) {
-								ExchangeIO e = ExchangeIO.fromItem(item);
+							if(ItemExchangeUtil.isSomething(item, ExchangeIO.class)) {
+								ExchangeIO e = ItemExchangeUtil.parseSomething(item, ExchangeIO.class);
 								if(e.getType() == ExchangeType.INPUT) {
 									inputs.add(e);
 								} else if(e.getType() == ExchangeType.OUTPUT) {
 									outputs.add(e);
 								}
-							} else if(Exchange.isValidExchange(item)) {
-								Exchange e = Exchange.fromItem(item);
+							} else if(ItemExchangeUtil.isSomething(item, Exchange.class)) {
+								Exchange e = ItemExchangeUtil.parseSomething(item, Exchange.class);
 								exchanges.add(e);
-							} else if(Shop.isValidShop(item)) {
-								Shop e = Shop.fromItem(item);
+							} else if(ItemExchangeUtil.isSomething(item, Shop.class)) {
+								Shop e = ItemExchangeUtil.parseSomething(item, Shop.class);
 								shops.add(e);
 							} else {
 								return; //foreign items not allowed

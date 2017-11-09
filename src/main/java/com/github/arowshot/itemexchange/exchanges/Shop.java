@@ -2,7 +2,6 @@ package com.github.arowshot.itemexchange.exchanges;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,16 +9,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.arowshot.itemexchange.exchangerules.ExchangeRule;
-import com.github.arowshot.itemexchange.util.GsonUtil;
+import com.github.arowshot.itemexchange.util.ItemExchangeUtil;
+import com.github.arowshot.itemexchange.util.Serializable;
 
 import net.md_5.bungee.api.ChatColor;
 import vg.civcraft.mc.civmodcore.inventorygui.Clickable;
 import vg.civcraft.mc.civmodcore.inventorygui.ClickableInventory;
 import vg.civcraft.mc.civmodcore.itemHandling.ISUtils;
 
-public class Shop {
-	private static String lorePrefix = "ExchangeShop:";
-	
+public class Shop implements Serializable {
 	private List<Exchange> exchanges;
 	private String name;
 	
@@ -52,16 +50,8 @@ public class Shop {
 		for(Exchange exchange : exchanges) {
 			lore.add(ChatColor.AQUA + exchange.toString());
 		}
-		lore.add(loreSerialize());
+		
 		return lore;
-	}
-	
-	public String loreSerialize() {
-		String json = "";
-		for(char c : (lorePrefix + GsonUtil.getGson().toJson(this)).toCharArray()) {
-			json += "\u00A7" + c;
-		}
-		return json;
 	}
 	
 	public void updateShop(ItemStack item) {
@@ -72,38 +62,8 @@ public class Shop {
 		ItemStack item = new ItemStack(Material.STONE_BUTTON);
 		ISUtils.setName(item, ChatColor.GREEN + "Shop");
 		updateShop(item);
+		item = ItemExchangeUtil.serializeSomething(item, this);
 		return item;
-	}
-	
-	public static boolean isValidShop(ItemStack item) {
-		if(!item.hasItemMeta())
-			return false;
-		List<String> lore = item.getItemMeta().getLore();
-		if(!lore.isEmpty()) {
-			String lastLore = lore.get(lore.size()-1).replaceAll("\u00A7", "");
-			if(lastLore.startsWith(lorePrefix)) {
-				return true;
-			} else {
-				Logger.getAnonymousLogger().info(lastLore);
-			}
-		}
-		return false;
-	}
-	
-	public static Shop fromItem(ItemStack item) {
-		List<String> lore = item.getItemMeta().getLore();
-		if(!lore.isEmpty()) {
-			String lastLore = lore.get(lore.size()-1).replaceAll("\u00A7", "");
-			if(lastLore.startsWith(lorePrefix)) {
-				lastLore = lastLore.replaceFirst(lorePrefix, "");
-				try {
-					return GsonUtil.getGson().fromJson(lastLore, Shop.class);
-				} catch(Exception ex) {
-					Logger.getLogger("ItemExchange").severe("Failed to parse shop from item");
-				}
-			}
-		}
-		return null;
 	}
 	
 	public void ShowShop(Player player, final Inventory shopInventory) {

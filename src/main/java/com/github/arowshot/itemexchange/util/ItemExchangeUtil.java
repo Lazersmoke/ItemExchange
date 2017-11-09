@@ -2,6 +2,7 @@ package com.github.arowshot.itemexchange.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -10,6 +11,9 @@ import org.bukkit.material.MaterialData;
 import com.github.arowshot.itemexchange.exchanges.Exchange;
 import com.github.arowshot.itemexchange.exchanges.ExchangeIO;
 import com.github.arowshot.itemexchange.exchanges.ExchangeIO.ExchangeType;
+
+import vg.civcraft.mc.civmodcore.itemHandling.TagManager;
+
 import com.github.arowshot.itemexchange.exchanges.Shop;
 
 public class ItemExchangeUtil {
@@ -20,14 +24,14 @@ public class ItemExchangeUtil {
 		for(ItemStack item : inv) {
 			if(item == null)
 				continue;
-			if(Shop.isValidShop(item)) {
-				return Shop.fromItem(item);
+			if(ItemExchangeUtil.isSomething(item, Shop.class)) {
+				return ItemExchangeUtil.parseSomething(item, Shop.class);
 			}
-			if(Exchange.isValidExchange(item)) {
-				exchanges.add(Exchange.fromItem(item));
+			if(ItemExchangeUtil.isSomething(item, Exchange.class)) {
+				exchanges.add(ItemExchangeUtil.parseSomething(item, Exchange.class));
 			}
-			if(ExchangeIO.isValidExchange(item)) {
-				ExchangeIO io = ExchangeIO.fromItem(item);
+			if(ItemExchangeUtil.isSomething(item, ExchangeIO.class)) {
+				ExchangeIO io = ItemExchangeUtil.parseSomething(item, ExchangeIO.class);
 				if(io.getType() == ExchangeType.INPUT) {
 					if(input != null) {
 						if(!outputs.isEmpty())
@@ -63,5 +67,35 @@ public class ItemExchangeUtil {
 	public static String getName(MaterialData dat) {
 		System.out.println(dat.toString());
 		return dat.toString();
+	}
+	
+	public static <T extends Serializable> boolean isSomething(ItemStack item, Class<T> classOfT) {
+		TagManager itemTags = new TagManager(item);
+		if(itemTags.getString("itemexchange:"+classOfT)!="") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static <T extends Serializable> T parseSomething(ItemStack item, Class<T> classOfT) {
+		TagManager itemTags = new TagManager(item);
+		String possibleData = itemTags.getString("itemexchange:"+classOfT);
+		if(possibleData!="") { 
+			try {
+				return GsonUtil.getGson().fromJson(possibleData, classOfT);
+			} catch(Exception ex) {
+				Logger.getLogger("ItemExchange").severe("Failed to parse item");
+			}
+		}
+		return null;
+	}
+	
+	public static <T extends Serializable> ItemStack serializeSomething(ItemStack item, T theT) {
+		TagManager itemTags = new TagManager(item);
+		itemTags.setString("itemexchange:"+theT.getClass(),
+				GsonUtil.getGson().toJson(theT));
+		System.out.println(itemTags.getString("itemexchange:"+theT.getClass()));
+		return itemTags.enrichWithNBT(item);
 	}
 }

@@ -2,15 +2,14 @@ package com.github.arowshot.itemexchange.exchanges;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.arowshot.itemexchange.util.GsonUtil;
 import com.github.arowshot.itemexchange.util.ItemExchangeUtil;
+import com.github.arowshot.itemexchange.util.Serializable;
 import com.github.arowshot.itemexchange.util.TransactionFailedException;
 
 import net.md_5.bungee.api.ChatColor;
@@ -18,10 +17,7 @@ import vg.civcraft.mc.civmodcore.inventorygui.Clickable;
 import vg.civcraft.mc.civmodcore.inventorygui.ClickableInventory;
 import vg.civcraft.mc.civmodcore.itemHandling.ISUtils;
 
-public class Exchange {
-	private static String lorePrefix = "ExchangeItem:";
-	
-	
+public class Exchange implements Serializable {
 	private ExchangeIO input;
 	private List<ExchangeIO> outputs;
 	
@@ -44,23 +40,25 @@ public class Exchange {
 				.append(input.getRules().size())
 				.append(" rules)")
 				.toString());
+		
 		ISUtils.addLore(item, ChatColor.DARK_AQUA + "Outputs:");
 		for(ExchangeIO output : outputs) {
 			ISUtils.addLore(item, new StringBuilder()
 					.append(ChatColor.AQUA)
 					.append(output.getCount())
 					.append(" ")
-					.append(ItemExchangeUtil.getName(getInput().getData()))
+					.append(ItemExchangeUtil.getName(output.getData()))
 					.append(" (")
 					.append(output.getRules().size())
 					.append(" rules)")
 					.toString());
 		}
-		String json = "";
+		/*String json = "";
 		for(char c : (lorePrefix + GsonUtil.getGson().toJson(this)).toCharArray()) {
 			json += "\u00A7" + c;
 		}
-		ISUtils.addLore(item, json);
+		ISUtils.addLore(item, json);*/
+		item = ItemExchangeUtil.serializeSomething(item, this);
 		return item;
 	}
 	
@@ -79,35 +77,6 @@ public class Exchange {
 		}
 		
 		return sb.toString().substring(0, sb.length()-2); //cut off last comma
-	}
-	
-	public static boolean isValidExchange(ItemStack item) {
-		if(!item.hasItemMeta())
-			return false;
-		List<String> lore = item.getItemMeta().getLore();
-		if(!lore.isEmpty()) {
-			String lastLore = lore.get(lore.size()-1).replaceAll("\u00A7", "");
-			if(lastLore.startsWith(lorePrefix)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static Exchange fromItem(ItemStack item) {
-		List<String> lore = item.getItemMeta().getLore();
-		if(!lore.isEmpty()) {
-			String lastLore = lore.get(lore.size()-1).replaceAll("\u00A7", "");
-			if(lastLore.startsWith(lorePrefix)) {
-				lastLore = lastLore.replaceFirst(lorePrefix, "");
-				try {
-					return GsonUtil.getGson().fromJson(lastLore, Exchange.class);
-				} catch(Exception ex) {
-					Logger.getLogger("ItemExchange").severe("Failed to parse exchange from item");
-				}
-			}
-		}
-		return null;
 	}
 
 	public ExchangeIO getInput() {

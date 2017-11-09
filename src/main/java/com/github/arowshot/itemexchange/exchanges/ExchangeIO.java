@@ -2,21 +2,19 @@ package com.github.arowshot.itemexchange.exchanges;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import com.github.arowshot.itemexchange.exchangerules.ExchangeRule;
-import com.github.arowshot.itemexchange.util.GsonUtil;
+import com.github.arowshot.itemexchange.util.ItemExchangeUtil;
+import com.github.arowshot.itemexchange.util.Serializable;
 
 import net.md_5.bungee.api.ChatColor;
 import vg.civcraft.mc.civmodcore.itemHandling.ISUtils;
 
-public class ExchangeIO {
-	private static String lorePrefix = "ExchangeItemIO:";
-	
+public class ExchangeIO implements Serializable {
 	private ExchangeType type;
 	private MaterialData data;
 	private int count;
@@ -56,11 +54,9 @@ public class ExchangeIO {
 					.toString());
 			}
 		}
-		String json = "";
-		for(char c : ("ExchangeItemIO:" + GsonUtil.getGson().toJson(this)).toCharArray()) {
-			json += "\u00A7" + c;
-		}
-		ISUtils.addLore(item, json);
+		
+		item = ItemExchangeUtil.serializeSomething(item, this);
+		
 		return item;
 	}
 	
@@ -75,36 +71,6 @@ public class ExchangeIO {
 			return false;
 		}
 		return conforms;
-	}
-	
-	public static boolean isValidExchange(ItemStack item) {
-		if(!item.hasItemMeta())
-			return false;
-		List<String> lore = item.getItemMeta().getLore();
-		if(!lore.isEmpty()) {
-			String lastLore = lore.get(lore.size()-1).replaceAll("\u00A7", "");
-			if(lastLore.startsWith(lorePrefix)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static ExchangeIO fromItem(ItemStack item) {
-		List<String> lore = item.getItemMeta().getLore();
-		if(!lore.isEmpty()) {
-			String lastLore = lore.get(lore.size()-1).replaceAll("\u00A7", "");
-			if(lastLore.startsWith(lorePrefix)) {
-				lastLore = lastLore.replaceFirst(lorePrefix, "");
-				try {
-					return GsonUtil.getGson().fromJson(lastLore, ExchangeIO.class);
-				} catch(Exception ex) {
-					ex.printStackTrace();
-					Logger.getLogger("ItemExchange").severe("Failed to parse exchange from item");
-				}
-			}
-		}
-		return null;
 	}
 	
 	public ExchangeType getType() {
