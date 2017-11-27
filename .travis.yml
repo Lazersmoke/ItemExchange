@@ -1,0 +1,4 @@
+# Minimal Travis build script for mineman
+
+# Use Maven
+language: java
